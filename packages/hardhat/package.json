@@ -1,6 +1,10 @@
 {
   "name": "hardhat-project",
   "devDependencies": {
+    "@openzeppelin/hardhat-upgrades": "^1.18.1",
     "hardhat": "^2.9.7"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.6.0"
   }
 }
