@@ -34,7 +34,7 @@ contract AuctionHouse is Ownable {
                                  MODIFIERS
     --------------------------------------------------------------*/
     modifier noLiveAuction() {
-        if (block.timestamp <= auctionEnd) revert AuctionAlreadyLive();
+        if (block.timestamp <= openBidDeadline) revert AuctionAlreadyLive();
         _;
     }
 
