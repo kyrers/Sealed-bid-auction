@@ -12,21 +12,15 @@ contract AuctionHouse is Ownable {
     /*------------------------------------------------------------
                                  VARIABLES
     --------------------------------------------------------------*/
-    //Private mapping of all bidders bids
+
     mapping(address => uint256) private bids;
-
-    //Array of bidders
+    
     address[] public bidders;
-
-    //Highest bidder
     address public highestBidder;
 
-    //Highest bid
     uint256 public highestBid;
-
     //End of auction
     uint256 public auctionEnd;
-
     //Limit for opening bids
     uint256 public openBidDeadline;
     
@@ -94,7 +88,6 @@ contract AuctionHouse is Ownable {
 
     /**
     * @notice Allow user to make a bid
-    * @dev If the highest bid is equal to msg.value, the older bid will stay as the highest
     */
     function placeBid() external payable liveAuction {
         //Check no value sent
@@ -109,11 +102,12 @@ contract AuctionHouse is Ownable {
 
     /**
     * @notice Allow user to open the bid and recover funds if done in time
+    * @dev If the highest bid is equal to msg.value, the older bid will stay as the highest
     */
     function openBid() external payable isWithinOpeningPeriod {
         uint256 bidValue = bids[msg.sender];
 
-        //Check no value sent
+        //Check no bid made
         if (bidValue <= 0) revert NotEnoughBalance();
 
         //Update user balance
