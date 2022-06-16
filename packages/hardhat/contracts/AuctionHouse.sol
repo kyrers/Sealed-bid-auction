@@ -45,7 +45,7 @@ contract AuctionHouse is Ownable {
     /*------------------------------------------------------------
                                  EVENTS
     --------------------------------------------------------------*/
-    event AuctionStarted(uint256 _openBidDeadline, uint256 _auctionEnd);
+    event AuctionStarted(uint256 _auctionEnd, uint256 _openBidDeadline);
     event BidPlaced(address _account, uint256 _amount);
     event Withdrawal(address _account, uint256 _amount);
 
@@ -83,7 +83,7 @@ contract AuctionHouse is Ownable {
         highestBidder = address(0);
         highestBid = type(uint256).min;
 
-        emit AuctionStarted(openBidDeadline, auctionEnd);
+        emit AuctionStarted(auctionEnd, openBidDeadline);
     }
 
     /**
