@@ -38,7 +38,7 @@ contract AuctionHouse is Ownable {
     }
 
     modifier isWithinOpeningPeriod() {
-        if(block.timestamp <= auctionEnd && block.timestamp > openBidDeadline) revert OutsideBidOpeningPeriod();
+        if(block.timestamp <= auctionEnd || block.timestamp > openBidDeadline) revert OutsideBidOpeningPeriod();
         _;
     }
     
@@ -46,7 +46,7 @@ contract AuctionHouse is Ownable {
                                  EVENTS
     --------------------------------------------------------------*/
     event AuctionStarted(uint256 _auctionEnd, uint256 _openBidDeadline);
-    event BidPlaced(address _account, uint256 _amount);
+    event BidPlaced(address _account);
     event Withdrawal(address _account, uint256 _amount);
 
     /*------------------------------------------------------------
@@ -97,14 +97,14 @@ contract AuctionHouse is Ownable {
         bids[msg.sender] = msg.value;
         bidders.push(msg.sender);
         
-        emit BidPlaced(msg.sender, msg.value);
+        emit BidPlaced(msg.sender);
     }
 
     /**
     * @notice Allow user to open the bid and recover funds if done in time
     * @dev If the highest bid is equal to msg.value, the older bid will stay as the highest
     */
-    function openBid() external payable isWithinOpeningPeriod {
+    function openBid() external isWithinOpeningPeriod {
         uint256 bidValue = bids[msg.sender];
 
         //Check no bid made
