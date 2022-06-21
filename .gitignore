@@ -1,8 +1,8 @@
 node_modules
-
-#Hardhat files
 cache
 artifacts
 packages/hardhat/package-lock.json
-
+packages/hardhat/.env
 ToDo
+
+packages/frontend/auction_house/package-lock.json

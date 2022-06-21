@@ -1,6 +1,5 @@
 import { JsonRpcSigner } from '@ethersproject/providers';
 import { useEffect, useState } from 'react';
-import { targetNetwork } from './config/config';
 import { connect } from './hooks/connect';
 import { loadContract } from './hooks/loadContract';
 import './App.css';

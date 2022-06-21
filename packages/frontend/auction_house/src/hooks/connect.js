@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { targetNetwork } from '../config/Config';
+import { targetNetwork } from '../config/config';
 
 export const connect = async () => {
     if (window.ethereum) {

@@ -1,5 +1,3 @@
-export const INFURA_ID = "YOUR_INFURA_ID";
-
 export const NETWORKS = {
     localhost: {
         name: "localhost",
@@ -8,7 +6,7 @@ export const NETWORKS = {
         blockExplorer: "",
         rpcUrl: "http://" + window.location.hostname + ":8545",
     }
-}
+};
 
 export const targetNetwork = NETWORKS.localhost;
-export const contractAddress = "YOUR_CONTRACT_ADDRESS";
+export const contractAddress = "0xb3569F147b70B3ec72A2B9a16856ae15B7a57f00";
