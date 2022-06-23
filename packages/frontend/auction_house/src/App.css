@@ -9,22 +9,36 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
+.connect-button {
+  border-radius: 25px;
+  min-height: 35px;
+  min-width: 100px;
+  background-color: paleturquoise;
+}
+
+.app-title {
+  font-size: 42px;
+  margin-left: 25px;
+}
+
+.wallet-panel {
+  display: flex;
+  flex-direction: column;
+  margin-right: 25px;
+  margin-top: 25px;
+}
+
 .header-target-network {
+  font-size: 12px;
+  margin: 0px;
   color: #e0d068
 }
 
@@ -32,10 +46,18 @@
   color: #61dafb;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

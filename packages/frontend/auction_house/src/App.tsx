@@ -1,6 +1,6 @@
 import { JsonRpcSigner } from '@ethersproject/providers';
 import { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import  Header from './components/Header';
 import { connect } from './hooks/connect';
 import { loadContract } from './hooks/loadContract';
 import { targetNetwork } from './config/config';
@@ -29,18 +29,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Auction House</h1>
-        <h5 className="header-target-network">{targetNetwork.name}</h5>
-        <Button onClick={connect}>
-          {
-            connectedWallet !== "" ?
-              <span>{connectedWallet}</span>
-              :
-              <span>Connect</span>
-          }
-        </Button>
-      </header>
+      <Header name="Auction House" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect}/>
     </div>
   );
 }
