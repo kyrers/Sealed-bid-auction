@@ -1,10 +1,10 @@
 import { JsonRpcSigner } from '@ethersproject/providers';
-import { useEffect, useState } from 'react';
-import Header from './components/Header';
-import MainPanel from './components/MainPanel';
 import { connect } from './hooks/connect';
 import { loadContract } from './hooks/loadContract';
 import { targetNetwork } from './config/config';
+import { useEffect, useState } from 'react';
+import Header from './components/Header';
+import MainPanel from './components/MainPanel';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

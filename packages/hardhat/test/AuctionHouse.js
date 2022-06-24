@@ -139,7 +139,7 @@ describe("Auction House", function () {
   });
 
   describe("### OPEN BID ###", function () {
-    it("Should open bid and make it the current highest bid", async function () {
+    it("Should open bid, make it the current highest bid and emit no withdrawal", async function () {
       const [owner] = await ethers.getSigners();
 
       const startAuctionTx = await contract.startAuction(1);
@@ -152,20 +152,15 @@ describe("Auction House", function () {
 
       const openBidTx = await contract.openBid();
       const openBidTxReceipt = await openBidTx.wait();
-
-      const address = openBidTxReceipt.events[0].args[0];
-      const amount = openBidTxReceipt.events[0].args[1];
-
       const highestBidder = await contract.highestBidder();
       const highestBid = await contract.highestBid();
 
-      expect(address).to.equal(owner.address);
+      expect(openBidTxReceipt.events.length).to.equal(0);
       expect(highestBidder).to.equal(owner.address);
-      expect(amount).to.equal(ethers.utils.parseEther("0.5"));
       expect(highestBid).to.equal(ethers.utils.parseEther("0.5"));
     });
 
-    it("Should open bid, but it isn't the highest bid", async function () {
+    it("Should open bid, but it isn't the highest bid, so it should withdraw to own address", async function () {
       const [owner, signer] = await ethers.getSigners();
 
       const startAuctionTx = await contract.startAuction(1);
@@ -180,7 +175,7 @@ describe("Auction House", function () {
       await network.provider.send("evm_mine");
 
       const openBidTx = await contract.connect(signer).openBid();
-      await openBidTx.wait();
+      const openBidTxReceipt = await openBidTx.wait();
       const ownerOpenBidTx = await contract.openBid();
       const ownerOpenBidTxReceipt = await ownerOpenBidTx.wait();
 
@@ -190,8 +185,43 @@ describe("Auction House", function () {
       const highestBidder = await contract.highestBidder();
       const highestBid = await contract.highestBid();
       
+      expect(openBidTxReceipt.events.length).to.equal(0);
       expect(address).to.equal(owner.address);
       expect(highestBidder).to.equal(signer.address);
+      expect(amount).to.equal(ethers.utils.parseEther("0.5"));
+      expect(highestBid).to.equal(ethers.utils.parseEther("1"));
+    });
+
+    it("Should open bid and make it the new highest bid, so it should withdraw to previous highest bidder address", async function () {
+      const [owner, signer] = await ethers.getSigners();
+
+      const startAuctionTx = await contract.startAuction(1);
+      await startAuctionTx.wait();
+
+      const placeBidTx = await contract.connect(signer).placeBid({value: ethers.utils.parseEther("0.5")});
+      await placeBidTx.wait();
+      const ownerPlaceBidTx = await contract.placeBid({value: ethers.utils.parseEther("1")});
+      await ownerPlaceBidTx.wait();
+
+      await network.provider.send("evm_increaseTime", [60])
+      await network.provider.send("evm_mine");
+
+      const openBidTx = await contract.connect(signer).openBid();
+      const openBidTxReceipt = await openBidTx.wait();
+      const ownerOpenBidTx = await contract.openBid();
+      const ownerOpenBidTxReceipt = await ownerOpenBidTx.wait();
+
+      const address = ownerOpenBidTxReceipt.events[0].args[0];
+      const amount = ownerOpenBidTxReceipt.events[0].args[1];
+
+      console.log(address);
+      console.log(amount);
+      const highestBidder = await contract.highestBidder();
+      const highestBid = await contract.highestBid();
+
+      expect(openBidTxReceipt.events.length).to.equal(0);
+      expect(address).to.equal(signer.address);
+      expect(highestBidder).to.equal(owner.address);
       expect(amount).to.equal(ethers.utils.parseEther("0.5"));
       expect(highestBid).to.equal(ethers.utils.parseEther("1"));
     });

@@ -101,7 +101,7 @@ contract AuctionHouse is Ownable {
     }
 
     /**
-    * @notice Allow user to open the bid and recover funds if done in time
+    * @notice Allow user to open the bid and recover funds if done in time and not the highest bidder
     * @dev If the highest bid is equal to msg.value, the older bid will stay as the highest
     */
     function openBid() external isWithinOpeningPeriod {
@@ -110,20 +110,34 @@ contract AuctionHouse is Ownable {
         //Check no bid made
         if (bidValue <= 0) revert NotEnoughBalance();
 
-        //Update user balance
-        bids[msg.sender] = 0;
-
         //Check if highest bid
         if(bidValue > highestBid) {
+            uint256 previousHighestBid = highestBid;
+            address previousHighestBidder = highestBidder;
+
+            //Update previous highest bidder user balance
+            bids[previousHighestBidder] = 0;
+
             highestBid = bidValue;
             highestBidder = msg.sender;
-        }
 
-        //Process withdrawal
-        (bool success,) = address(msg.sender).call{value: bidValue}("");
-        if(!success) revert FailedToSendFunds();
+            //Process withdrawal to dethroned highest bidder
+            if(previousHighestBidder != address(0)) {
+                (bool success,) = address(previousHighestBidder).call{value: previousHighestBid}("");
+                if(!success) revert FailedToSendFunds();
+
+                emit Withdrawal(previousHighestBidder, previousHighestBid);
+            }
+        } else {
+            //Update user balance
+            bids[msg.sender] = 0;
+
+            //Process withdrawal
+            (bool success,) = address(msg.sender).call{value: bidValue}("");
+            if(!success) revert FailedToSendFunds();
  
-        emit Withdrawal(msg.sender, bidValue);
+            emit Withdrawal(msg.sender, bidValue);
+        }
     }
 
     /**
