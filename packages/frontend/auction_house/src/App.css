@@ -1,5 +1,5 @@
 .App {
-  background: darkslategrey;
+  background: rgb(30, 32, 41);
   text-align: center;
   min-height: 100vh;
 }
@@ -18,10 +18,21 @@
 }
 
 .connect-button {
-  border-radius: 25px;
+  border-radius: 25px !important;
   min-height: 35px;
   min-width: 100px;
-  background-color: paleturquoise;
+  background-color: darkgray !important;
+  border: 1px solid black !important;
+}
+
+.info-button {
+  min-height: 35px;
+  cursor: pointer;
+}
+
+.connect-button:hover {
+  border: 1px solid black;
+  background-color: dimgray;
 }
 
 .app-title {
@@ -44,6 +55,11 @@
 
 .App-link {
   color: #61dafb;
+}
+
+/*STYLE*/
+.white-space-break-spaces {
+  white-space: break-spaces;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -1,5 +1,6 @@
-import React, { MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 import { Button } from "react-bootstrap";
+import HelpModal from './HelpModal';
 
 type FunctionProps = {
     name: string;
@@ -9,11 +10,10 @@ type FunctionProps = {
 };
 
 function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps) {
-
-
     return (
         <header className="App-header">
             <span className="app-title">{name}</span>
+            <HelpModal />
             <div className="wallet-panel">
                 <Button className="connect-button" onClick={connect}>
                     {

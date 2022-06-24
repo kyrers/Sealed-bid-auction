@@ -1,10 +1,12 @@
 import { JsonRpcSigner } from '@ethersproject/providers';
 import { useEffect, useState } from 'react';
-import  Header from './components/Header';
+import Header from './components/Header';
+import MainPanel from './components/MainPanel';
 import { connect } from './hooks/connect';
 import { loadContract } from './hooks/loadContract';
 import { targetNetwork } from './config/config';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -30,6 +32,7 @@ function App() {
   return (
     <div className="App">
       <Header name="Auction House" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect}/>
+      <MainPanel />
     </div>
   );
 }
