@@ -17,6 +17,11 @@
   color: white;
 }
 
+.app-info-panel {
+  display: flex;
+  align-items: center;
+}
+
 .connect-button {
   border-radius: 25px !important;
   min-height: 35px;
@@ -26,8 +31,9 @@
 }
 
 .info-button {
-  min-height: 35px;
+  height: 30px;
   cursor: pointer;
+  margin-left: 25px;
 }
 
 .connect-button:hover {
@@ -36,7 +42,7 @@
 }
 
 .app-title {
-  font-size: 42px;
+  font-size: 30px;
   margin-left: 25px;
 }
 

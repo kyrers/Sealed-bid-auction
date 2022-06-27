@@ -12,8 +12,10 @@ type FunctionProps = {
 function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps) {
     return (
         <header className="App-header">
-            <span className="app-title">{name}</span>
-            <HelpModal />
+            <div className="app-info-panel">
+                <span className="app-title">{name}</span>
+                <HelpModal />
+            </div>
             <div className="wallet-panel">
                 <Button className="connect-button" onClick={connect}>
                     {
