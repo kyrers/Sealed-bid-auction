@@ -110,6 +110,31 @@ describe("Auction House", function () {
       expect(bidderArray).to.equal(owner.address);
     });
 
+    it("Should add to the already placed bid", async function () {
+      const [owner] = await ethers.getSigners();
+
+      const startAuctionTx = await contract.startAuction(1);
+      await startAuctionTx.wait();
+
+      const placeBidTx = await contract.placeBid({value: ethers.utils.parseEther("0.5")});
+      const placeBixTxReceipt = await placeBidTx.wait();
+
+      const placeSecondBidTx = await contract.placeBid({value: ethers.utils.parseEther("0.5")});
+      const placeSecondBixTxReceipt = await placeSecondBidTx.wait();
+
+      await network.provider.send("evm_increaseTime", [60]);
+      await network.provider.send("evm_mine");
+
+      const openBidTx = await contract.openBid();
+      await openBidTx.wait();
+      const highestBidder = await contract.highestBidder();
+      const highestBid = await contract.highestBid();
+
+      expect(highestBidder).to.equal(owner.address);
+      expect(highestBid).to.equal(ethers.utils.parseEther("1"));
+    });
+
+
     it("Should not place bid because the current auction bidding period has ended", async function () {
       const [owner] = await ethers.getSigners();
 
@@ -214,8 +239,6 @@ describe("Auction House", function () {
       const address = ownerOpenBidTxReceipt.events[0].args[0];
       const amount = ownerOpenBidTxReceipt.events[0].args[1];
 
-      console.log(address);
-      console.log(amount);
       const highestBidder = await contract.highestBidder();
       const highestBid = await contract.highestBid();
 

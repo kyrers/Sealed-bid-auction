@@ -94,7 +94,7 @@ contract AuctionHouse is Ownable {
         if (msg.value <= 0) revert NoFundsSent();
 
         //Update user bid and bidders array
-        bids[msg.sender] = msg.value;
+        bids[msg.sender] += msg.value;
         bidders.push(msg.sender);
         
         emit BidPlaced(msg.sender);
