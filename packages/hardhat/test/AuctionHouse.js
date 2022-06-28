@@ -91,6 +91,12 @@ describe("Auction House", function () {
 
       await expect(contract.startAuction(1)).to.be.reverted;    
     });
+
+    it("Should not start an auction because the duration is longer than one day", async function () {
+      const [owner] = await ethers.getSigners();
+
+      await expect(contract.startAuction(1441)).to.be.reverted;    
+    });
   });
 
   describe("### PLACE BID ###", function () {

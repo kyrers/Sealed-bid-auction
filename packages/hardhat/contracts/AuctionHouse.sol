@@ -32,6 +32,11 @@ contract AuctionHouse is Ownable {
         _;
     }
 
+    modifier validDuration(uint256 _duration) {
+        if(_duration > 1440) revert LongerThanOneDay();
+        _;
+    }
+
     modifier liveAuction() {
         if (block.timestamp > auctionEnd) revert NoAuctionLive();
         _;
@@ -53,6 +58,7 @@ contract AuctionHouse is Ownable {
                                  ERRORS
     --------------------------------------------------------------*/
     error AuctionAlreadyLive();
+    error LongerThanOneDay();
     error NoAuctionLive();
     error OutsideBidOpeningPeriod();
     error NoFundsSent();
@@ -71,7 +77,7 @@ contract AuctionHouse is Ownable {
     * @notice Allows owner to start an auction
     * @param _duration Duration of the auction in minutes
     */
-    function startAuction(uint256 _duration) external onlyOwner noLiveAuction {
+    function startAuction(uint256 _duration) external onlyOwner noLiveAuction validDuration(_duration) {
         //Delete mappings
         resetMappings();
 
