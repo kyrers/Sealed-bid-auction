@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
   const [connectedWallet, setConnectedWallet] = useState("");
+  const [auctionEnd, setAuctionEnd] = useState(0);
+  const [openBidDeadline, setOpenBidDeadline] = useState(0);
 
   //Connect user wallet
   useEffect(() => {
@@ -29,10 +31,18 @@ function App() {
 
   const auctionHouseContract = loadContract(userSigner);
 
+  //Listen to events
+  if (auctionHouseContract != null && auctionHouseContract.provider != null) {
+    auctionHouseContract.on("AuctionStarted", (auctionEnd, openBidDeadline) => {
+      setAuctionEnd(auctionEnd);
+      setOpenBidDeadline(openBidDeadline);
+    });
+  }
+
   return (
     <div className="App">
       <Header name="Auction House" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect}/>
-      <MainPanel />
+      <MainPanel auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} />
     </div>
   );
 }
