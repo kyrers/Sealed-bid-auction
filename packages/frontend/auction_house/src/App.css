@@ -23,23 +23,26 @@
   align-items: center;
 }
 
-.connect-button {
+.custom-button {
   border-radius: 25px !important;
-  min-height: 35px;
-  min-width: 100px;
   background-color: darkgray !important;
   border: 1px solid black !important;
+  cursor: pointer;
+}
+
+.custom-button:hover {
+  background-color: #5c636a !important;
+}
+
+.connect-button {
+  min-height: 35px;
+  min-width: 100px;
 }
 
 .info-button {
   height: 30px;
   cursor: pointer;
   margin-left: 25px;
-}
-
-.connect-button:hover {
-  border: 1px solid black;
-  background-color: dimgray;
 }
 
 .app-title {
@@ -58,6 +61,16 @@
   font-size: 12px;
   margin: 0px;
   color: #e0d068
+}
+
+.main-panel {
+  padding: 25px;
+  width: 100%;
+}
+
+.main-panel .card {
+  background: linear-gradient(45deg, black, transparent);
+  box-shadow: 5px 5px 5px 0px darkslategrey;
 }
 
 .App-link {

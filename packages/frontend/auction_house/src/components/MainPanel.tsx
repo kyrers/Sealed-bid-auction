@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from 'react';
-import { Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 
 type FunctionProps = {
     auctionEnd: number;
@@ -10,9 +10,39 @@ function MainPanel({ auctionEnd, openBidDeadline }: FunctionProps) {
 
     if (auctionEnd === 0 && openBidDeadline === 0) {
         return (
-            <div className="main-panel">
-                <span>No Auction Live</span>
-            </div>
+            <Row className="main-panel">
+                <Col sm={4}>
+                    <div className="card">
+                        <div className="card-body">
+                            <h5 className="card-title">Place bid</h5>
+                            <Button active={false} className="custom-button">
+                                <span>Place Bid</span>
+                            </Button>
+                        </div>
+                    </div>
+                </Col>
+                <Col sm={4}>
+                    <div className="card">
+                        <div className="card-body">
+                            <h5 className="card-title">Current Auction</h5>
+                            <span>No Auction Live</span>
+                            <Button active={false} className="custom-button">
+                                <span>Start auction</span>
+                            </Button>
+                        </div>
+                    </div>
+                </Col>
+                <Col sm={4}>
+                    <div className="card">
+                        <div className="card-body">
+                            <h5 className="card-title">Open Bid</h5>
+                            <Button active={false} className="custom-button">
+                                <span>Place Bid</span>
+                            </Button>
+                        </div>
+                    </div>
+                </Col>
+            </Row >
         );
     }
     return (

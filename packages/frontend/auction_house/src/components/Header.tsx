@@ -17,7 +17,7 @@ function Header({ name, targetNetwork, connectedWallet, connect }: FunctionProps
                 <HelpModal />
             </div>
             <div className="wallet-panel">
-                <Button className="connect-button" onClick={connect}>
+                <Button className="custom-button connect-button" onClick={connect}>
                     {
                         connectedWallet !== "" ?
                             <span>{connectedWallet}</span>
