@@ -73,6 +73,11 @@
   box-shadow: 5px 5px 5px 0px darkslategrey;
 }
 
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+
 .App-link {
   color: #61dafb;
 }
