@@ -7,6 +7,7 @@ import Header from './components/Header';
 import MainPanel from './components/MainPanel';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ethers } from 'ethers';
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -39,10 +40,15 @@ function App() {
     });
   }
 
+  //Contract interactions
+  async function startAuction(_duration: number) {
+    await auctionHouseContract.startAuction(_duration);
+  }
+
   return (
     <div className="App">
       <Header name="Auction House" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect}/>
-      <MainPanel auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} />
+      <MainPanel auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} startAuction={(_duration) => startAuction(_duration)} />
     </div>
   );
 }

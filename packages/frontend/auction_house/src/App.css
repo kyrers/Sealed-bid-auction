@@ -78,6 +78,28 @@
   flex-direction: column;
 }
 
+.auction-state {
+  display: flex;
+  align-items: center;
+  align-self: center;
+}
+
+.circle-red {
+  background: red;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.circle-green {
+  background: green;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
 .App-link {
   color: #61dafb;
 }
