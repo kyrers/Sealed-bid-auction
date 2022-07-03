@@ -12,6 +12,8 @@ type RenderCardFunctionProps = {
     placeBidDisabled: boolean;
     liveAuction: boolean;
     openBidDisabled: boolean;
+    auctionEndDate: Date;
+    openBidDeadlinedate: Date;
     startAuction: (_duration: number) => void;
 };
 
@@ -19,20 +21,22 @@ function MainPanel({ auctionEnd, openBidDeadline, startAuction }: FunctionProps)
     var currentDate = new Date();
     var auctionEndDate = new Date(ethers.BigNumber.from(auctionEnd * 1000).toNumber());
     var openBidDeadlineDate = new Date(ethers.BigNumber.from(openBidDeadline * 1000).toNumber());
-    console.log("RENDERING MAIN PANEL: ", auctionEndDate, openBidDeadlineDate, currentDate);
 
     if (auctionEndDate >= currentDate) { // Within bidding period
-        return <RenderCards placeBidDisabled={false} liveAuction={true} openBidDisabled={false} startAuction={() => startAuction(1)} />
+        return <RenderCards placeBidDisabled={false} liveAuction={true} openBidDisabled={false}
+            auctionEndDate={auctionEndDate} openBidDeadlinedate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
     }
 
     if (auctionEndDate < currentDate && openBidDeadlineDate >= currentDate) { // Within open bid deadline
-        return <RenderCards placeBidDisabled={true} liveAuction={true} openBidDisabled={false} startAuction={() => startAuction(1)} />
+        return <RenderCards placeBidDisabled={true} liveAuction={true} openBidDisabled={false}
+            auctionEndDate={auctionEndDate} openBidDeadlinedate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
     }
 
-    return <RenderCards placeBidDisabled={true} liveAuction={false} openBidDisabled={true} startAuction={() => startAuction(1)} />
+    return <RenderCards placeBidDisabled={true} liveAuction={false} openBidDisabled={true}
+        auctionEndDate={auctionEndDate} openBidDeadlinedate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
 }
 
-function RenderCards({ placeBidDisabled, liveAuction, openBidDisabled, startAuction }: RenderCardFunctionProps) {
+function RenderCards({ placeBidDisabled, liveAuction, openBidDisabled, auctionEndDate, openBidDeadlinedate, startAuction }: RenderCardFunctionProps) {
     return (
         <Row className="main-panel">
             <Col sm={4}>
@@ -54,16 +58,21 @@ function RenderCards({ placeBidDisabled, liveAuction, openBidDisabled, startAuct
                         <div className="card-info">
                             {
                                 liveAuction ?
-
-                                    <span className="auction-state">
-                                        <div className="circle-green" />
-                                        Auction Live
-                                    </span>
+                                    <div className="auction-info">
+                                        <div className="auction-state">
+                                            <span className="circle-green" />
+                                            <b>Auction Live</b>
+                                        </div>
+                                        <span><b>Auction End:</b> {auctionEndDate.toISOString()}</span>
+                                        <span><b>Open Bid Deadline:</b> {openBidDeadlinedate.toISOString()}</span>
+                                    </div>
                                     :
-                                    <span className="auction-state">
-                                        <div className="circle-red" />
-                                        No Auction Live
-                                    </span>
+                                    <div className="auction-info">
+                                        <div className="auction-state">
+                                            <span className="circle-red" />
+                                            <b>No Auction Live</b>
+                                        </div>
+                                    </div>
                             }
                             <Button disabled={liveAuction} className="custom-button" onClick={() => startAuction(1)}>
                                 <span>Start auction</span>

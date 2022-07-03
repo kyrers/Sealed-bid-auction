@@ -78,10 +78,18 @@
   flex-direction: column;
 }
 
+.auction-info {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  /*align-self: baseline;*/
+  padding: 10px;
+}
+
 .auction-state {
   display: flex;
+  align-self: center !important;
   align-items: center;
-  align-self: center;
 }
 
 .circle-red {
