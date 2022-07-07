@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
-import React, { MouseEventHandler } from 'react';
 import { Button, Col, Row } from "react-bootstrap";
+import AuctionCard from './AuctionCard';
 
 type FunctionProps = {
     auctionEnd: number;
@@ -13,7 +13,7 @@ type RenderCardFunctionProps = {
     liveAuction: boolean;
     openBidDisabled: boolean;
     auctionEndDate: Date;
-    openBidDeadlinedate: Date;
+    openBidDeadlineDate: Date;
     startAuction: (_duration: number) => void;
 };
 
@@ -24,19 +24,19 @@ function MainPanel({ auctionEnd, openBidDeadline, startAuction }: FunctionProps)
 
     if (auctionEndDate >= currentDate) { // Within bidding period
         return <RenderCards placeBidDisabled={false} liveAuction={true} openBidDisabled={false}
-            auctionEndDate={auctionEndDate} openBidDeadlinedate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
+            auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
     }
 
     if (auctionEndDate < currentDate && openBidDeadlineDate >= currentDate) { // Within open bid deadline
         return <RenderCards placeBidDisabled={true} liveAuction={true} openBidDisabled={false}
-            auctionEndDate={auctionEndDate} openBidDeadlinedate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
+            auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
     }
 
     return <RenderCards placeBidDisabled={true} liveAuction={false} openBidDisabled={true}
-        auctionEndDate={auctionEndDate} openBidDeadlinedate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
+        auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
 }
 
-function RenderCards({ placeBidDisabled, liveAuction, openBidDisabled, auctionEndDate, openBidDeadlinedate, startAuction }: RenderCardFunctionProps) {
+function RenderCards({ placeBidDisabled, liveAuction, openBidDisabled, auctionEndDate, openBidDeadlineDate, startAuction }: RenderCardFunctionProps) {
     return (
         <Row className="main-panel">
             <Col sm={4}>
@@ -52,34 +52,7 @@ function RenderCards({ placeBidDisabled, liveAuction, openBidDisabled, auctionEn
                 </div>
             </Col>
             <Col sm={4}>
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">Current Auction</h5>
-                        <div className="card-info">
-                            {
-                                liveAuction ?
-                                    <div className="auction-info">
-                                        <div className="auction-state">
-                                            <span className="circle-green" />
-                                            <b>Auction Live</b>
-                                        </div>
-                                        <span><b>Auction End:</b> {auctionEndDate.toISOString()}</span>
-                                        <span><b>Open Bid Deadline:</b> {openBidDeadlinedate.toISOString()}</span>
-                                    </div>
-                                    :
-                                    <div className="auction-info">
-                                        <div className="auction-state">
-                                            <span className="circle-red" />
-                                            <b>No Auction Live</b>
-                                        </div>
-                                    </div>
-                            }
-                            <Button disabled={liveAuction} className="custom-button" onClick={() => startAuction(1)}>
-                                <span>Start auction</span>
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+                <AuctionCard liveAuction={liveAuction} auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={() => startAuction(1)}/>
             </Col>
             <Col sm={4}>
                 <div className="card">
