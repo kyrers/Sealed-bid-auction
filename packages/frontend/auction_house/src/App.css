@@ -24,9 +24,9 @@
 }
 
 .custom-button {
-  border-radius: 25px !important;
-  background-color: darkgray !important;
-  border: 1px solid black !important;
+  border-radius: 15px !important;
+  background-color: #a9a9a9bd !important;
+  border: 2px solid cadetblue !important;
   cursor: pointer;
 }
 
@@ -68,9 +68,17 @@
   width: 100%;
 }
 
-.main-panel .card {
-  background: linear-gradient(45deg, black, transparent);
-  box-shadow: 5px 5px 5px 0px darkslategrey;
+.card-column {
+  background: #5f9ea054;
+  padding: 20px;
+  border: 2px solid cadetblue;
+  border-radius: 30px;
+}
+
+.custom-card {
+  background: rgb(30 32 41 / 50%) !important;
+  border: 2px solid coral !important;
+  border-radius: 10px !important;
 }
 
 .card-info {

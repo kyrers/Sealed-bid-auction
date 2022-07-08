@@ -24,44 +24,48 @@ function MainPanel({ auctionEnd, openBidDeadline, startAuction }: FunctionProps)
 
     if (auctionEndDate >= currentDate) { // Within bidding period
         return <RenderCards placeBidDisabled={false} liveAuction={true} openBidDisabled={false}
-            auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
+            auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={(_duration) => startAuction(_duration)} />
     }
 
     if (auctionEndDate < currentDate && openBidDeadlineDate >= currentDate) { // Within open bid deadline
         return <RenderCards placeBidDisabled={true} liveAuction={true} openBidDisabled={false}
-            auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
+            auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={(_duration) => startAuction(_duration)} />
     }
 
     return <RenderCards placeBidDisabled={true} liveAuction={false} openBidDisabled={true}
-        auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={() => startAuction(1)} />
+        auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={(_duration) => startAuction(_duration)} />
 }
 
 function RenderCards({ placeBidDisabled, liveAuction, openBidDisabled, auctionEndDate, openBidDeadlineDate, startAuction }: RenderCardFunctionProps) {
     return (
         <Row className="main-panel">
             <Col sm={4}>
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">Place bid</h5>
-                        <div className="card-info">
-                            <Button disabled={placeBidDisabled} className="custom-button">
-                                <span>Place Bid</span>
-                            </Button>
+                <div className="card-column">
+                    <div className="card custom-card">
+                        <div className="card-body">
+                            <h5 className="card-title">Place bid</h5>
+                            <div className="card-info">
+                                <Button disabled={placeBidDisabled} className="custom-button">
+                                    <span>Place Bid</span>
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </Col>
             <Col sm={4}>
-                <AuctionCard liveAuction={liveAuction} auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={() => startAuction(1)}/>
+                <AuctionCard liveAuction={liveAuction} auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} startAuction={(duration) => startAuction(duration)} />
             </Col>
             <Col sm={4}>
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">Open Bid</h5>
-                        <div className="card-info">
-                            <Button disabled={openBidDisabled} className="custom-button">
-                                <span>Open Bid</span>
-                            </Button>
+                <div className="card-column">
+                    <div className="card custom-card">
+                        <div className="card-body">
+                            <h5 className="card-title">Open Bid</h5>
+                            <div className="card-info">
+                                <Button disabled={openBidDisabled} className="custom-button">
+                                    <span>Open Bid</span>
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,12 +73,5 @@ function RenderCards({ placeBidDisabled, liveAuction, openBidDisabled, auctionEn
         </Row >
     );
 }
-/*return (
-    <div className="main-panel">
-        <span>Auction Live</span>
-        <span>Auction End: {new Date(auctionEnd).toLocaleString()}</span>
-        <span>Open Bid Deadline {new Date(openBidDeadline).toLocaleString()}</span>
-    </div>
-);*/
 
 export default MainPanel;

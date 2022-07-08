@@ -15,7 +15,6 @@ function AuctionCard({ liveAuction, auctionEndDate, openBidDeadlineDate, startAu
     const renderAuctionCard = () => {
         const handleSubmit = (event: any) => {
             const form = event.currentTarget;
-            console.log("DURATION: ", duration);
 
             event.preventDefault();
             if (form.checkValidity() === false) {
@@ -46,29 +45,31 @@ function AuctionCard({ liveAuction, auctionEndDate, openBidDeadlineDate, startAu
     }
 
     return (
-        <div className="card">
-            <div className="card-body">
-                <h5 className="card-title">Current Auction</h5>
-                <div className="card-info">
-                    {
-                        liveAuction ?
-                            <div className="auction-info">
-                                <div className="auction-state">
-                                    <span className="circle-green" />
-                                    <b>Auction Live</b>
+        <div className="card-column">
+            <div className="card custom-card">
+                <div className="card-body">
+                    <h5 className="card-title">Current Auction</h5>
+                    <div className="card-info">
+                        {
+                            liveAuction ?
+                                <div className="auction-info">
+                                    <div className="auction-state">
+                                        <span className="circle-green" />
+                                        <b>Auction Live</b>
+                                    </div>
+                                    <span><b>Auction End:</b> {auctionEndDate.toUTCString()}</span>
+                                    <span><b>Open Bid Deadline:</b> {openBidDeadlineDate.toUTCString()}</span>
                                 </div>
-                                <span><b>Auction End:</b> {auctionEndDate.toUTCString()}</span>
-                                <span><b>Open Bid Deadline:</b> {openBidDeadlineDate.toUTCString()}</span>
-                            </div>
-                            :
-                            <div className="auction-info">
-                                <div className="auction-state">
-                                    <span className="circle-red" />
-                                    <b>No Auction Live</b>
+                                :
+                                <div className="auction-info">
+                                    <div className="auction-state">
+                                        <span className="circle-red" />
+                                        <b>No Auction Live</b>
+                                    </div>
+                                    {renderAuctionCard()}
                                 </div>
-                                {renderAuctionCard()}
-                            </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
         </div>
