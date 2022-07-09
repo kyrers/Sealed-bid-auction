@@ -32,8 +32,8 @@ function AuctionCard({ liveAuction, auctionEndDate, openBidDeadlineDate, startAu
                     <InputGroup>
                         <Form.Control required type="number" placeholder="Duration in minutes" min="5" max="1440"
                             value={duration} onChange={(e) => setDuration(Number(e.target.value))} />
-                        <Form.Control.Feedback type="invalid">Please select a value between 5 and 1440.</Form.Control.Feedback>
                         <InputGroup.Text id="minText">min</InputGroup.Text>
+                        <Form.Control.Feedback type="invalid">Please select a value between 5 and 1440.</Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
 

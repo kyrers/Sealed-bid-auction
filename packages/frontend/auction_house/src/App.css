@@ -127,6 +127,10 @@
 }
 
 /*STYLE*/
+.opacity-65 {
+  opacity: .65;
+}
+
 .white-space-break-spaces {
   white-space: break-spaces;
 }

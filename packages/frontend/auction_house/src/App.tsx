@@ -7,7 +7,7 @@ import Header from './components/Header';
 import MainPanel from './components/MainPanel';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
@@ -45,10 +45,20 @@ function App() {
     await auctionHouseContract.startAuction(_duration);
   }
 
+  async function placeBid(_bid: number) {
+    console.log("BID: ", ethers.utils.parseUnits(_bid.toString(), "ether"));
+    await auctionHouseContract.placeBid({ value: ethers.utils.parseEther(_bid.toString()) });
+  }
+
+  async function openBid() {
+    await auctionHouseContract.openBid();
+  }
+
   return (
     <div className="App">
-      <Header name="Auction House" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect}/>
-      <MainPanel auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} startAuction={(_duration) => startAuction(_duration)} />
+      <Header name="Auction House" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect} />
+      <MainPanel auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} startAuction={(_duration) => startAuction(_duration)}
+        placeBid={(_bid) => placeBid(_bid)} openBid={() => openBid()} />
     </div>
   );
 }
