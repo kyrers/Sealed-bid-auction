@@ -14,6 +14,8 @@ function App() {
   const [connectedWallet, setConnectedWallet] = useState("");
   const [auctionEnd, setAuctionEnd] = useState(0);
   const [openBidDeadline, setOpenBidDeadline] = useState(0);
+  const [highestBid, setHighestBid] = useState(0);
+  const [highestBidder, setHighestBidder] = useState("");
 
   //Connect user wallet
   useEffect(() => {
@@ -37,6 +39,13 @@ function App() {
     auctionHouseContract.on("AuctionStarted", (auctionEnd, openBidDeadline) => {
       setAuctionEnd(auctionEnd);
       setOpenBidDeadline(openBidDeadline);
+      getHighestBid();
+      getHighestBidder();
+    });
+
+    auctionHouseContract.on("Withdrawal", () => {
+      getHighestBid();
+      getHighestBidder();
     });
   }
 
@@ -46,19 +55,29 @@ function App() {
   }
 
   async function placeBid(_bid: number) {
-    console.log("BID: ", ethers.utils.parseUnits(_bid.toString(), "ether"));
     await auctionHouseContract.placeBid({ value: ethers.utils.parseEther(_bid.toString()) });
   }
 
   async function openBid() {
+    console.log("OPENING BID");
     await auctionHouseContract.openBid();
+  }
+
+  async function getHighestBid() {
+    setHighestBid(await auctionHouseContract.highestBid());
+    console.log("HIGHEST BID:" + highestBid);
+  }
+
+  async function getHighestBidder() {
+    setHighestBidder(await auctionHouseContract.highestBidder());
+    console.log("HIGHEST BIDDER:" + highestBidder);
   }
 
   return (
     <div className="App">
       <Header name="Auction House" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect} />
-      <MainPanel auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} startAuction={(_duration) => startAuction(_duration)}
-        placeBid={(_bid) => placeBid(_bid)} openBid={() => openBid()} />
+      <MainPanel auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} highestBid={highestBid} highestBidder={highestBidder} 
+        startAuction={(_duration) => startAuction(_duration)} placeBid={(_bid) => placeBid(_bid)} openBid={() => openBid()} />
     </div>
   );
 }

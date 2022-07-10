@@ -1,3 +1,4 @@
+import { ethers } from 'ethers';
 import { useState } from 'react';
 import { Button, Form, InputGroup } from "react-bootstrap";
 
@@ -5,10 +6,12 @@ type FunctionProps = {
     liveAuction: boolean;
     auctionEndDate: Date;
     openBidDeadlineDate: Date;
+    highestBid: number;
+    highestBidder: string;
     startAuction: (_duration: number) => void;
 };
 
-function AuctionCard({ liveAuction, auctionEndDate, openBidDeadlineDate, startAuction }: FunctionProps) {
+function AuctionCard({ liveAuction, auctionEndDate, openBidDeadlineDate, highestBid, highestBidder, startAuction }: FunctionProps) {
     const [formValidated, setFormValidated] = useState(false);
     const [duration, setDuration] = useState(5);
 
@@ -57,6 +60,8 @@ function AuctionCard({ liveAuction, auctionEndDate, openBidDeadlineDate, startAu
                                         <span className="circle-green" />
                                         <b>Auction Live</b>
                                     </div>
+                                    <span><b>Highest Bid:</b> {highestBid == 0 ? "No bid opened yet" : `${highestBid} ETH` }</span>
+                                    <span><b>Highest Bidder:</b> {highestBidder === ethers.constants.AddressZero ? "No bid opened yet" : highestBidder}</span>
                                     <span><b>Auction End:</b> {auctionEndDate.toUTCString()}</span>
                                     <span><b>Open Bid Deadline:</b> {openBidDeadlineDate.toUTCString()}</span>
                                 </div>
