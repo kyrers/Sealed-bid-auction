@@ -60,7 +60,7 @@ function AuctionCard({ liveAuction, auctionEndDate, openBidDeadlineDate, highest
                                         <span className="circle-green" />
                                         <b>Auction Live</b>
                                     </div>
-                                    <span><b>Highest Bid:</b> {highestBid == 0 ? "No bid opened yet" : `${highestBid} ETH` }</span>
+                                    <span><b>Highest Bid:</b> {highestBid == 0 ? "No bid opened yet" : `${ethers.utils.formatEther(highestBid)} ETH` }</span>
                                     <span><b>Highest Bidder:</b> {highestBidder === ethers.constants.AddressZero ? "No bid opened yet" : highestBidder}</span>
                                     <span><b>Auction End:</b> {auctionEndDate.toUTCString()}</span>
                                     <span><b>Open Bid Deadline:</b> {openBidDeadlineDate.toUTCString()}</span>

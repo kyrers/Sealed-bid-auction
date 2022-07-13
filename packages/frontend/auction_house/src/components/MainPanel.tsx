@@ -33,7 +33,7 @@ function MainPanel({ auctionEnd, openBidDeadline, highestBid, highestBidder, sta
     var openBidDeadlineDate = new Date(ethers.BigNumber.from(openBidDeadline * 1000).toNumber());
 
     if (auctionEndDate >= currentDate) { // Within bidding period
-        return <RenderCards placeBidDisabled={false} liveAuction={true} openBidDisabled={false}
+        return <RenderCards placeBidDisabled={false} liveAuction={true} openBidDisabled={true}
             auctionEndDate={auctionEndDate} openBidDeadlineDate={openBidDeadlineDate} highestBid={highestBid} highestBidder={highestBidder} 
             startAuction={(_duration) => startAuction(_duration)} placeBid={(_bid) => placeBid(_bid)} openBid={() => openBid()} />
     }

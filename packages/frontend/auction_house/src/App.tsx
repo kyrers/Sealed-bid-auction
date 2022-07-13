@@ -59,18 +59,15 @@ function App() {
   }
 
   async function openBid() {
-    console.log("OPENING BID");
     await auctionHouseContract.openBid();
   }
 
   async function getHighestBid() {
     setHighestBid(await auctionHouseContract.highestBid());
-    console.log("HIGHEST BID:" + highestBid);
   }
 
   async function getHighestBidder() {
     setHighestBidder(await auctionHouseContract.highestBidder());
-    console.log("HIGHEST BIDDER:" + highestBidder);
   }
 
   return (

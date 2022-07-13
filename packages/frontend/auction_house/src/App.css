@@ -1,5 +1,5 @@
 .App {
-  background: rgb(30, 32, 41);
+  background: rgba(16,18,18,255);
   text-align: center;
   min-height: 100vh;
   color: white;
@@ -24,9 +24,9 @@
 }
 
 .custom-button {
-  border-radius: 15px !important;
-  background-color: #a9a9a9bd !important;
-  border: 2px solid cadetblue !important;
+  border-radius: 10px !important;
+  background-color: rgba(33,35,40,255) !important;
+  border: 1px solid gray !important;
   cursor: pointer;
 }
 
@@ -69,16 +69,16 @@
 }
 
 .card-column {
-  background: #5f9ea054;
+  background: rgba(33,35,40,255);
   padding: 20px;
-  border: 2px solid cadetblue;
-  border-radius: 30px;
+  border: 1px solid black;
+  border-radius: 15px;
 }
 
 .custom-card {
   background: rgb(30 32 41 / 50%) !important;
   border: 2px solid coral !important;
-  border-radius: 10px !important;
+  border-radius: 5px !important;
 }
 
 .card-info {
@@ -126,6 +126,14 @@
   color: #61dafb;
 }
 
+.modal-content {
+  background: rgba(16,18,18,255) !important;
+  color: white !important;
+}
+
+.model-header .btn-close {
+  color: white !important;
+}
 /*STYLE*/
 .opacity-65 {
   opacity: .65;

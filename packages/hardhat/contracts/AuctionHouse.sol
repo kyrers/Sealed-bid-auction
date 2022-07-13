@@ -117,7 +117,10 @@ contract AuctionHouse is Ownable {
         if (bidValue <= 0) revert NotEnoughBalance();
 
         //Check if highest bid
-        if(bidValue > highestBid) {
+        if(highestBid == 0) {
+            highestBid = bidValue;
+            highestBidder = msg.sender;
+        } else if(bidValue > highestBid) {
             uint256 previousHighestBid = highestBid;
             address previousHighestBidder = highestBidder;
 
