@@ -8,18 +8,17 @@ type FunctionProps = {
 
 function PlaceBidCard({ placeBidDisabled, placeBid }: FunctionProps) {
     const [formValidated, setFormValidated] = useState(false);
-    const [bid, setBid] = useState(0.5);
+    const [bid, setBid] = useState("0.50");
 
     const renderPlaceBidCard = () => {
         const handleSubmit = (event: any) => {
-            const form = event.currentTarget;
-
+            const value = Number.parseFloat(bid);
             event.preventDefault();
-            if (form.checkValidity() === false) {
+            if (value <= 0) {
                 event.stopPropagation();
                 setFormValidated(true);
             } else {
-                placeBid(bid);
+                placeBid(value);
             }
         };
 
@@ -28,8 +27,8 @@ function PlaceBidCard({ placeBidDisabled, placeBid }: FunctionProps) {
                 <Form.Group className="margin-bottom-10" controlId="validation">
                     <Form.Label>Bid</Form.Label>
                     <InputGroup className={placeBidDisabled ? "opacity-65" : ""}>
-                        <Form.Control disabled={placeBidDisabled} required type="double" placeholder="bid" min="0" value={bid} onChange={(e) => setBid(Number(e.target.value))}/>
-                        <InputGroup.Text id="minText">ETH</InputGroup.Text>
+                        <Form.Control disabled={placeBidDisabled} required type="text" placeholder="bid" min="0" value={bid} onChange={(e) => setBid(e.target.value)}/>
+                        <InputGroup.Text id="ethText">ETH</InputGroup.Text>
                         <Form.Control.Feedback type="invalid">Please make a bid above 0</Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
