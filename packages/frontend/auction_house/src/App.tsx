@@ -11,6 +11,7 @@ import { BigNumber, ethers } from 'ethers';
 
 function App() {
   const [userSigner, setUserSigner] = useState<JsonRpcSigner | null>();
+  const [auctionCreator, setAuctionCreator] = useState("");
   const [connectedWallet, setConnectedWallet] = useState("");
   const [auctionEnd, setAuctionEnd] = useState(0);
   const [openBidDeadline, setOpenBidDeadline] = useState(0);
@@ -39,6 +40,7 @@ function App() {
     auctionHouseContract.on("AuctionStarted", (auctionEnd, openBidDeadline) => {
       setAuctionEnd(auctionEnd);
       setOpenBidDeadline(openBidDeadline);
+      setAuctionCreator(userSigner?._address ?? "");
       getHighestBid();
       getHighestBidder();
     });
@@ -73,7 +75,7 @@ function App() {
   return (
     <div className="App">
       <Header name="Auction House" targetNetwork={targetNetwork.name} connectedWallet={connectedWallet} connect={connect} />
-      <MainPanel auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} highestBid={highestBid} highestBidder={highestBidder} 
+      <MainPanel auctionCreator={auctionCreator} auctionEnd={auctionEnd} openBidDeadline={openBidDeadline} highestBid={highestBid} highestBidder={highestBidder} 
         startAuction={(_duration) => startAuction(_duration)} placeBid={(_bid) => placeBid(_bid)} openBid={() => openBid()} />
     </div>
   );
