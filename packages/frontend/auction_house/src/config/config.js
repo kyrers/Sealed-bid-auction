@@ -9,4 +9,4 @@ export const NETWORKS = {
 };
 
 export const targetNetwork = NETWORKS.localhost;
-export const contractAddress = "0x83a4b4010a9cA396a701Da885367E2012F0FF561";
+export const contractAddress = "0x3e40055F749aA49b2f4a6E8bf88a2B411796D317";

@@ -30,23 +30,27 @@ function App() {
 
   useEffect(() => {
     function handleAuctionEndReached() {
-      setAuctionEnd(0);
       window.clearTimeout(id);
       window.location.reload();
     }
 
-    if (auctionEnd !== 0) {
-      var id = window.setTimeout(() => handleAuctionEndReached(), 10000);
+    if (ethers.BigNumber.from(auctionEnd).toNumber() !== 0) {
+      var auctionEndDate = new Date(ethers.BigNumber.from(auctionEnd * 1000).toNumber());
+      var delay = new Date(ethers.BigNumber.from(auctionEnd * 1000).toNumber()).getTime() - Date.now();
+      var id = window.setTimeout(() => handleAuctionEndReached(), delay);
     }
   }, [auctionEnd]);
 
   useEffect(() => {
     function handleOpenBidDeadlineReached() {
-      setOpenBidDeadline(0);
       window.clearTimeout(id);
       window.location.reload();
     }
-    var id = window.setTimeout(() => handleOpenBidDeadlineReached(), 20000);
+
+    if (ethers.BigNumber.from(openBidDeadline).toNumber() !== 0) {
+      var delay = new Date(ethers.BigNumber.from(openBidDeadline * 1000).toNumber()).getTime() - Date.now();
+      var id = window.setTimeout(() => handleOpenBidDeadlineReached(), delay);
+    }
   }, [openBidDeadline]);
 
   //Listen to wallet changes
@@ -58,20 +62,32 @@ function App() {
 
   //Listen to events
   if (auctionHouseContract != null && auctionHouseContract.provider != null) {
-    auctionHouseContract.on("AuctionStarted", async (auctionEnd, openBidDeadline) => {
-      console.log("AUCTION STARTED EVENT");
-      var address = await userSigner?.getAddress() ?? "";
-      setAuctionEnd(auctionEnd);
-      setOpenBidDeadline(openBidDeadline);
-      setAuctionCreator(address);
-      getHighestBid();
-      getHighestBidder();
-    });
+    ethers.providers.getDefaultProvider().once("block", () => {
+      auctionHouseContract.on("AuctionStarted", async (_auctionEnd, _openBidDeadline) => {
+        console.log("AUCTION STARTED EVENT");
+        var address = await userSigner?.getAddress() ?? "";
+        var currentDate = new Date();
+        var auctionEndDate = new Date(ethers.BigNumber.from(_auctionEnd * 1000).toNumber());
+        var openBidDeadlineDate = new Date(ethers.BigNumber.from(_openBidDeadline * 1000).toNumber());
 
-    auctionHouseContract.on("Withdrawal", () => {
-      getHighestBid();
-      getHighestBidder();
-    });
+        if (auctionEndDate >= currentDate && ethers.BigNumber.from(_auctionEnd).toNumber() > auctionEnd) {
+          setAuctionEnd(_auctionEnd);
+        }
+
+        if (openBidDeadlineDate >= currentDate && ethers.BigNumber.from(_openBidDeadline).toNumber() > openBidDeadline) {
+          setOpenBidDeadline(_openBidDeadline);
+        }
+
+        setAuctionCreator(address);
+        getHighestBid();
+        getHighestBidder();
+      });
+
+      auctionHouseContract.on("Withdrawal", () => {
+        getHighestBid();
+        getHighestBidder();
+      });
+    })
   }
 
   //Contract interactions
