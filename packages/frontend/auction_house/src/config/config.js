@@ -2,11 +2,11 @@ export const NETWORKS = {
     localhost: {
         name: "localhost",
         color: "#666666",
-        chainId: 31337,
+        chainId: 1337,
         blockExplorer: "",
         rpcUrl: "http://" + window.location.hostname + ":8545",
     }
 };
 
 export const targetNetwork = NETWORKS.localhost;
-export const contractAddress = "0x3e40055F749aA49b2f4a6E8bf88a2B411796D317";
+export const contractAddress = "0x0E700411191DEdb838017B8666eE7aE7C6d1815A";
