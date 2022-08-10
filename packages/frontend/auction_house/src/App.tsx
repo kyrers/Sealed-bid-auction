@@ -35,7 +35,6 @@ function App() {
     }
 
     if (ethers.BigNumber.from(auctionEnd).toNumber() !== 0) {
-      var auctionEndDate = new Date(ethers.BigNumber.from(auctionEnd * 1000).toNumber());
       var delay = new Date(ethers.BigNumber.from(auctionEnd * 1000).toNumber()).getTime() - Date.now();
       var id = window.setTimeout(() => handleAuctionEndReached(), delay);
     }
@@ -64,7 +63,6 @@ function App() {
   if (auctionHouseContract != null && auctionHouseContract.provider != null) {
     ethers.providers.getDefaultProvider().once("block", () => {
       auctionHouseContract.on("AuctionStarted", async (_auctionEnd, _openBidDeadline) => {
-        console.log("AUCTION STARTED EVENT");
         var address = await userSigner?.getAddress() ?? "";
         var currentDate = new Date();
         var auctionEndDate = new Date(ethers.BigNumber.from(_auctionEnd * 1000).toNumber());

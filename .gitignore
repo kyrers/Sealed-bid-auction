@@ -3,6 +3,7 @@ cache
 artifacts
 packages/hardhat/package-lock.json
 packages/hardhat/.env
+packages/frontend/auction_house/.env
 ToDo
 
 packages/frontend/auction_house/package-lock.json
