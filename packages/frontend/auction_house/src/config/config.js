@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 export const NETWORKS = {
     localhost: {
         name: "localhost",
@@ -18,4 +16,4 @@ export const NETWORKS = {
 };
 
 export const targetNetwork = NETWORKS.goerli;
-export const contractAddress = "0x0E700411191DEdb838017B8666eE7aE7C6d1815A";
+export const contractAddress = "0x03f177A3851050518082dbDB9d0b4e4069C499E3";

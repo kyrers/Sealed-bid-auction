@@ -1,4 +1,4 @@
-# Sealed-bid-auction-house
+# Sealed bid auction house
 
 This project expands the challenge presented by Patrick McCorry in his second Cryptocurrency Class 2022 challenge.
 The main goal was to implement a contract capable of handling deposits and withdrawals. However, it mentioned sealed bids and timed withdrawals as possible use cases. So I decided to build this simple auction house.
@@ -20,6 +20,8 @@ With that said, here's the most important project capabilities:
 Functionalities not implemented:
 - Prizes - both setting prizes and distributing them afterwards;
 - Auction history.
+
+To see the project working, you can check out this [contract](https://goerli.etherscan.io/address/0x03f177A3851050518082dbDB9d0b4e4069C499E3) and this [UI](https://conscious-structure.surge.sh/) of which I am the owner, meaning only I can start an auction. But the best way to get the hang of this is to clone and modify/deploy the project yourself.
 
 ###### kyrers
 
